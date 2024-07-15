@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CollegeConnekt - AI-Powered College Admissions Assistant</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Google Sans', Arial, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background-color: #000000;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        nav {
+            background-color: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #8ab4f8;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        .nav-links li {
+            margin-left: 20px;
+        }
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        .nav-links a:hover {
+            color: #8ab4f8;
+            background-color: rgba(138, 180, 248, 0.1);
+        }
+        .cta-button {
+            background-color: #8ab4f8;
+            color: #202124;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        .cta-button:hover {
+            background-color: #aecbfa;
+            box-shadow: 0 0 10px 5px rgba(138, 180, 248, 0.5);
+            transform: translateY(-3px);
+        }
+        header {
+            text-align: center;
+            padding: 150px 20px 60px;
+            background: linear-gradient(to bottom, #000000, #1f1f1f);
+        }
+        h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 2.5em;
+            margin-top: 60px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .subtitle {
+            font-size: 1.5em;
+            color: #9aa0a6;
+            margin-bottom: 40px;
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 60px;
+        }
+        .feature {
+            flex-basis: 300px;
+            background-color: #1f1f1f;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(138, 180, 248, 0.2);
+        }
+        .feature h3 {
+            color: #8ab4f8;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .feature .cta-button {
+            background-color: #8ab4f8;
+            color: #202124;
+            margin-top: 10px;
+        }
+        .stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 60px;
+        }
+        .stat {
+            flex-basis: 200px;
+            margin: 20px;
+        }
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #8ab4f8;
+        }
+        .stat-description {
+            color: #9aa0a6;
+        }
+        .faq {
+            margin-top: 60px;
+            text-align: left;
+        }
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+        }
+        .faq-question {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #8ab4f8;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5em;
+            transition: transform 0.3s;
+        }
+        .faq-question.active::after {
+            transform: rotate(45deg);
+        }
+        .faq-answer {
+            color: #9aa0a6;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        footer {
+            background-color: #1f1f1f;
+            color: #9aa0a6;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        .footer-links a {
+            color: #8ab4f8;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .username-display {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            background-color: #1f1f1f;
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: #8ab4f8;
+        }
+    </style>
+</head>
+<body>
+    <div class="username-display" id="usernameDisplay"></div>
+    
+    <nav>
+        <div class="container">
+            <div class="logo">CollegeConnekt</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#stats">Stats</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="signup.html" class="cta-button">Sign Up</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <div class="container">
+            <h1>CollegeConnekt</h1>
+            <p class="subtitle">Excel in admissions with AI-powered assistance</p>
+            <a href="signup.html" class="cta-button">Sign Up</a>
+            <a href="#features" class="cta-button">Learn More</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="features" class="features">
+            <div class="feature">
+                <div class="feature-icon">🤖</div>
+                <h3>ConnektBot</h3>
+                <p>Your expert guide for navigating college admissions, financial aid, academic programs, and campus life.</p>
+                <a href="connektbot.html" class="cta-button">Try ConnektBot</a>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✍️</div>
+                <h3>OPUS</h3>
+                <p>Advanced AI model providing in-depth, constructive critique on your college essays.</p>
+                <a href="opus.html" class="cta-button">Try OPUS</a>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🚀</div>
+                <h3>GPT-4 Power</h3>
+                <p>Harness the capabilities of a language model comparable to GPT-4 for top-tier performance.</p>
+            </div>
+        </section>
+
+        <section id="stats" class="stats">
+            <div class="stat">
+                <div class="stat-number">90%</div>
+                <div class="stat-description">Accuracy Rate</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">500GB+</div>
+                <div class="stat-description">Comprehensive Data</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">4.94⭐</div>
+                <div class="stat-description">User Satisfaction</div>
+            </div>
+        </section>
+
+        <h2>Frequently Asked Questions</h2>
+        <section id="faq" class="faq">
+            <div class="faq-item">
+                <div class="faq-question">What is CollegeConnekt?</div>
+                <div class="faq-answer">CollegeConnekt is an AI-driven platform that helps you navigate college admissions, financial aid, academic choices, and campus life. We provide instant, accurate responses to make your college journey smoother.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Why choose CollegeConnekt over ChatGPT?</div>
+                <div class="faq-answer">Unlike general-purpose chatbots, CollegeConnekt is specialized in college admissions. We offer focused expertise to help you get into your dream school, with a dedication to genuinely assisting students.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How can I use CollegeConnekt?</div>
+                <div class="faq-answer">Simply sign up and start asking questions! Whether you need help with admissions, financial aid, essay feedback, or college comparisons, CollegeConnekt has got you covered.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What makes CollegeConnekt's AI special?</div>
+                <div class="faq-answer">Our AI combines seven advanced technologies, delivering expert-level guidance and comprehensive support to make your college journey smoother.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How does ConnektBot assist in college admissions?</div>
+                <div class="faq-answer">ConnektBot provides personalized guidance and answers to all your queries related to college admissions, financial aid, academic programs, and campus life.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How does OPUS help with essay writing?</div>
+                <div class="faq-answer">OPUS offers in-depth, constructive feedback on your college essays, helping you refine your writing and present your best self to admissions committees.</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 CollegeConnekt. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isOpen = question.classList.contains('active');
+                
+                // Close all other answers
+                document.querySelectorAll('.faq-question').forEach(q => {
+                    if (q !== question) {
+                        q.classList.remove('active');
+                        q.nextElementSibling.style.maxHeight = null;
+                    }
+                });
+
+                // Toggle the clicked question
+                question.classList.toggle('active');
+                if (isOpen) {
+                    answer.style.maxHeight = null;
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                }
+            });
+        });
+
+        function displayUsername() {
+            const username = localStorage.getItem('username');
+            if (username) {
+                const usernameDisplay = document.getElementById('usernameDisplay');
+                usernameDisplay.textContent = `Welcome, ${username}`;
+                usernameDisplay.style.display = 'block';
+            }
+        }
+
+        window.onload = displayUsername;
+    </script>
+</body>
+</html>
